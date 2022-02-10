@@ -6,6 +6,8 @@ import { CardActionArea, Button } from "@mui/material";
 
 export default function ActionAreaCard(props) {
   return (
+    <div style={{display:'flex',justifyContent:'space-between',marginTop:'200px',marginLeft:'50px'}}>
+    <div>
     <Card
       sx={{
         maxWidth: 345,
@@ -55,5 +57,10 @@ export default function ActionAreaCard(props) {
         </CardContent>
       </CardActionArea>
     </Card>
+    </div>
+    <div style={{marginRight:'80px'}}>
+    <iframe src="http://localhost/FlappyBird/" title="W3Schools Free Online Web Tutorials" width='450' height="500"></iframe>
+    </div>
+    </div>
   );
 }

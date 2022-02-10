@@ -16,12 +16,12 @@ function Carousel() {
 });
     return (
         <div>
-        <div class="carousel center">
-        <a class="carousel-item " href="#one!"><GameCard stake='10'/></a>
-        <a class="carousel-item" href="#two!"><GameCard stake='20'/></a>
-        <a class="carousel-item" href="#five!"><GameCard stake='50'/></a>
-        <a class="carousel-item" href="#three!"><GameCard stake='30'/></a>
-        <a class="carousel-item" href="#four!"><GameCard stake='40'/></a>
+        <div class="carousel " >
+        <a class="carousel-item center" href="#one!"><GameCard stake='10'/></a>
+        <a class="carousel-item" href="#two!" ><GameCard stake='20'/></a>
+        <a class="carousel-item" href="#five!" ><GameCard stake='50'/></a>
+        <a class="carousel-item" href="#three!" ><GameCard stake='30'/></a>
+        <a class="carousel-item" href="#four!" ><GameCard stake='40'/></a>
       </div>
     </div>
     )

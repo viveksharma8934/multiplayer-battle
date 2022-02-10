@@ -6,34 +6,48 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
+import Container from "@mui/material/Container"
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
 import MenuItem from "@mui/material/MenuItem";
 
-const pages = ["Home", "Lobbies"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const pages = ["Home", "LeaderBoard"];
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3
+};
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
   return (
     <AppBar position="static">
       <Container maxWidth="xl" sx={{ bgcolor: "black" }}>
@@ -104,37 +118,58 @@ const ResponsiveAppBar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+              <Button sx={{ my: 2, color: "white"}} onClick={handleOpen}>Login</Button>
+              <Button sx={{ my: 2, color: "white" }} onClick={handleOpen}>SignUp</Button>
           </Box>
+          <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <Box
+          sx={{
+            ...style,
+            width: 400,
+            "& .MuiTextField-root": { m: 1, width: "100%" }
+          }}
+        >
+          <div style={{display:'flex',justifyContent:'space-between'}}>
+          <h4 id="parent-modal-title">Login / SignUp</h4>
+          <Button onClick={handleClose}>
+              X
+            </Button>
+            </div>
+          <TextField
+            fullWidth
+            required
+            id="outlined-required"
+            label="Username"
+            defaultValue="Username"
+          />
+          <TextField
+            fullWidth
+            required
+            id="outlined-required"
+            label="Password"
+            type="password"
+            defaultValue="Hello World"
+            style={{ marginBottom: "10px" }}
+          />
+          <Stack spacing={1} direction="row">
+            <Button variant="contained" style={{ marginLeft: "10px" }}>
+              Login
+            </Button>
+            <Button variant="contained">
+              SignUp
+            </Button>
+          </Stack>
+        </Box>
+      </Modal>
         </Toolbar>
       </Container>
     </AppBar>
   );
 };
+
 export default ResponsiveAppBar;
