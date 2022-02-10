@@ -6,7 +6,8 @@ import { CardActionArea, Button } from "@mui/material";
 
 export default function ActionAreaCard(props) {
   return (
-    <div style={{display:'flex',justifyContent:'space-between',marginTop:'200px',marginLeft:'50px'}}>
+    <div style={{display:'flex',justifyContent:'space-between',marginTop:'50px'}}>
+    <div style={{display:'flex',justifyContent:'center',alignItems:'center',marginLeft:'auto',marginRight:'auto'}}>
     <div>
     <Card
       sx={{
@@ -58,8 +59,9 @@ export default function ActionAreaCard(props) {
       </CardActionArea>
     </Card>
     </div>
-    <div style={{marginRight:'80px'}}>
-    <iframe src="http://localhost/FlappyBird/" title="W3Schools Free Online Web Tutorials" width='450' height="500"></iframe>
+    </div>
+    <div style={{marginRight:'auto',marginRight:'auto'}}>
+    <iframe src="http://localhost/FlappyBird/" title="W3Schools Free Online Web Tutorials" width='450' height="500" frameborder="0" overflow="scroll" scrolling="no"></iframe>
     </div>
     </div>
   );
