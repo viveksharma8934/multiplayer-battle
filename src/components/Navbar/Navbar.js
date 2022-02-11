@@ -6,12 +6,13 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container"
+import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import MenuItem from "@mui/material/MenuItem";
+import userAPIS from "../../apis/auth";
 
 const pages = ["Home", "LeaderBoard"];
 
@@ -26,12 +27,15 @@ const style = {
   boxShadow: 24,
   pt: 2,
   px: 4,
-  pb: 3
+  pb: 3,
 };
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-
+  const [userName, setUsername] = React.useState(null);
+  const [password, setPassword] = React.useState(null);
+  const [logId, setLogid] = React.useState("LogIn");
+  const [balance,setBalance]= React.useState("Signup");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -40,9 +44,24 @@ const ResponsiveAppBar = () => {
     setOpen(false);
   };
 
-
+  const login = async () => {
+    console.log(userName, password);
+    let result = await userAPIS.loginUser(userName, password);
+    if (result.status) {
+      setBalance("$"+result.balance);
+      setLogid("Welcome,  "+result.username);
+      console.log(result);
+    } else {
+      alert(result?.err);
+    }
+  };
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
+  };
+
+  const create = async () => {
+    console.log(userName, password);
+    await userAPIS.createUser(userName, password);
   };
 
   const handleCloseNavMenu = () => {
@@ -77,17 +96,17 @@ const ResponsiveAppBar = () => {
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: "bottom",
-                horizontal: "left"
+                horizontal: "left",
               }}
               keepMounted
               transformOrigin={{
                 vertical: "top",
-                horizontal: "left"
+                horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" }
+                display: { xs: "block", md: "none" },
               }}
             >
               {pages.map((page) => (
@@ -116,56 +135,67 @@ const ResponsiveAppBar = () => {
               </Button>
             ))}
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
-              <Button sx={{ my: 2, color: "white"}} onClick={handleOpen}>Login</Button>
-              <Button sx={{ my: 2, color: "white" }} onClick={handleOpen}>SignUp</Button>
+            <Button sx={{ my: 2, color: "white" }} onClick={handleOpen}>
+              {logId}
+            </Button>
+            <Button sx={{ my: 2, color: "white" }} onClick={handleOpen}>
+              {balance}
+            </Button>
           </Box>
           <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <Box
-          sx={{
-            ...style,
-            width: 400,
-            "& .MuiTextField-root": { m: 1, width: "100%" }
-          }}
-        >
-          <div style={{display:'flex',justifyContent:'space-between'}}>
-          <h4 id="parent-modal-title">Login / SignUp</h4>
-          <Button onClick={handleClose}>
-              X
-            </Button>
-            </div>
-          <TextField
-            fullWidth
-            required
-            id="outlined-required"
-            label="Username"
-            defaultValue="Username"
-          />
-          <TextField
-            fullWidth
-            required
-            id="outlined-required"
-            label="Password"
-            type="password"
-            defaultValue="Hello World"
-            style={{ marginBottom: "10px" }}
-          />
-          <Stack spacing={1} direction="row">
-            <Button variant="contained" style={{ marginLeft: "10px" }}>
-              Login
-            </Button>
-            <Button variant="contained">
-              SignUp
-            </Button>
-          </Stack>
-        </Box>
-      </Modal>
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="parent-modal-title"
+            aria-describedby="parent-modal-description"
+          >
+            <Box
+              sx={{
+                ...style,
+                width: 400,
+                "& .MuiTextField-root": { m: 1, width: "100%" },
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h4 id="parent-modal-title">Login / SignUp</h4>
+                <Button onClick={handleClose}>X</Button>
+              </div>
+              <TextField
+                fullWidth
+                required
+                id="outlined-required"
+                label="Username"
+                defaultValue="Username"
+                onChange={(v) => {
+                  setUsername(v.target.value);
+                }}
+              />
+              <TextField
+                fullWidth
+                required
+                id="outlined-required"
+                label="Password"
+                type="password"
+                defaultValue="Hello World"
+                style={{ marginBottom: "10px" }}
+                onChange={(v) => {
+                  setPassword(v.target.value);
+                }}
+              />
+              <Stack spacing={1} direction="row">
+                <Button
+                  variant="contained"
+                  style={{ marginLeft: "10px" }}
+                  onClick={login}
+                >
+                  Login
+                </Button>
+                <Button variant="contained" onClick={create}>
+                  SignUp
+                </Button>
+              </Stack>
+            </Box>
+          </Modal>
         </Toolbar>
       </Container>
     </AppBar>
