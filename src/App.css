@@ -23,8 +23,15 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
-
+body {
+  background: linear-gradient(-90deg, #efd5ff 0%, #515ada 100%);
+  font-family: "Lato", sans-serif !important;
+}
+.css-1083xa6-MuiTypography-root {
+  font-family: "Lato", sans-serif !important;
+  font-weight: bolder;
+  
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
