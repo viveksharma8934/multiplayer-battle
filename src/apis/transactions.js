@@ -2,7 +2,7 @@ import config from "../config";
 
 const GetAllTransactions = async (userId) => {
   try {
-    let txn = await config.client.get("/user/transactions/5");
+    let txn = await config.client.get(`/user/transactions/${userId}`);
     if (txn.status == 200) {
       return {
         status: true,

@@ -66,6 +66,7 @@ const ResponsiveAppBar = () => {
       setBalance(`₹ ${result.balance}`);
       setLogid("Welcome,  " + result.username);
       console.log(result);
+      ustate.set(result?.id)
     } else {
       alert(result?.err);
     }
@@ -88,7 +89,7 @@ const ResponsiveAppBar = () => {
   };
   const handleCloseLeaderBoard = () => setOpenLeaderboard(false);
   const handleOpenTxn = async () => {
-    let resp = await TxnAPI.GetAllTransactions(5);
+    let resp = await TxnAPI.GetAllTransactions(ustate.get());
     console.log(resp);
     if (resp.status) {
       setTxn(resp.txns ? resp.txns :[]);

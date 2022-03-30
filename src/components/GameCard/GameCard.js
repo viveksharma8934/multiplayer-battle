@@ -11,10 +11,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
+import { useState } from "@hookstate/core";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import { textAlign } from "@mui/system";
 import BattleAPI from "../../apis/battle";
+import config from "../../config";
 const darkTheme = createTheme({ palette: { mode: "dark" } });
 
 export default function ActionAreaCard(props) {
@@ -22,8 +23,9 @@ export default function ActionAreaCard(props) {
   const [battles, setBattles] = React.useState([]);
   const [transactions, setTransactions] = React.useState([]);
   const [currentBattle, setCurrentBattle] = React.useState(null);
+  const ustate = useState(config.userState);
   const fetchTransactions = async () => {
-    let result = await BattleAPI.GetAllBattles(5);
+    let result = await BattleAPI.GetAllBattles(ustate.get());
     console.log(result);
     if (result.status) {
       setBattles(result.battles);
@@ -36,7 +38,7 @@ export default function ActionAreaCard(props) {
       console.log(currentBattle, result);
       if (currentBattle) {
         console.log(currentBattle, result);
-        BattleAPI.SendResult(currentBattle, result.score, 5);
+        BattleAPI.SendResult(currentBattle, result.score, ustate.get());
         setCurrentBattle(null);
         setOpenGame(false);
         fetchTransactions();
@@ -47,7 +49,7 @@ export default function ActionAreaCard(props) {
     }
   };
   const createNewBattle = async () => {
-    let resp = await BattleAPI.CreateBattle(5);
+    let resp = await BattleAPI.CreateBattle(ustate.get());
 
     console.log(resp);
     if (resp.status) {
@@ -59,7 +61,6 @@ export default function ActionAreaCard(props) {
     }
   };
   React.useEffect(() => {
-   
     window.addEventListener("message", handleEvent, false);
   }, [currentBattle]);
   return (
@@ -71,24 +72,21 @@ export default function ActionAreaCard(props) {
         padding: "50px",
       }}
     >
-      <Grid
-        item
-        xs={6}
-        md={6}
-        sx={{
-         
-          
-        }}
-      >
-        <Button variant="outlined" size="large" onClick={createNewBattle} sx={{
-          backgroundColor:"black",
-          color:"white",
-          borderRadius:"40px",
-          fontSize:"20px",
-          marginLeft:"18vw",
-          marginBottom:"12px"
-        }}>
-          Play Now (₹ 2.50)
+      <Grid item xs={6} md={6} sx={{}}>
+        <Button
+          variant="outlined"
+          size="large"
+          onClick={createNewBattle}
+          sx={{
+            backgroundColor: "black",
+            color: "white",
+            borderRadius: "40px",
+            fontSize: "20px",
+            marginLeft: "18vw",
+            marginBottom: "12px",
+          }}
+        >
+          Play Now (₹ 2 - ₹ 10)
         </Button>
         {/* <Card
           sx={{

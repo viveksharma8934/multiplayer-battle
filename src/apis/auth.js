@@ -47,6 +47,7 @@ const createUser = async (username, password) => {
       password,
     });
     console.log(data);
+    alert("successfully created user")
   } catch (err) {
     console.log(err.response.data);
   }
